@@ -1,6 +1,11 @@
+const { database } = require('../db/mongodb')
+const utils = require('../utils');
+const errors = require('../errors');
 module.exports = async function (context, req) {
     try {
-
+       
+        await utils.validateUUIDField(context, req.params.accessLogID, 'The accessLogID specified in the URL does not match the UUID v4 format.');
+       
 
 
 
@@ -33,11 +38,21 @@ module.exports = async function (context, req) {
             docs = await collection.find({}).sort({ "createdDate": -1 }).limit(200).toArray()
         }
 
-        context.res = {
-            body: docs
+        if (docs) {
+            context.res = {
+                body: docs
+            };
+        } else {
+            utils.setContextResError(
+                context,
+                new errors.AccessLogNotFoundError(
+                    'The accessLog of specified details doesn\'t exist.',
+                    404
+                )
+            );
         }
         return Promise.resolve()
- 
+
     } catch (err) {
 
     }
