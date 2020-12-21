@@ -8,7 +8,7 @@
       "methods": [
         "get"
       ],
-      "route": "get-access-log/merchants/{merchantID}/access-log/{accessLogID}"
+      "route": "get-one-child-merchant/{parentMerchantID}/child/{childID}"
     },
     {
       "type": "http",

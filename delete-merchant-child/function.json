@@ -6,9 +6,9 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "get"
+        "delete"
       ],
-      "route": "get-access-log/merchants/{merchantID}/access-log/{accessLogID}"
+      "route": "delete-merchant-child/{parentMerchantID}/child/{childID}"
     },
     {
       "type": "http",

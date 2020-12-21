@@ -4,11 +4,11 @@ const errors = require('../errors');
 module.exports = async function (context, req) {
     try {
 
-        await utils.validateUUIDField(context, req.params.merchantID, 'The accessLogID specified in the URL does not match the UUID v4 format.');
+       // await utils.validateUUIDField(context, req.params.merchantID, 'The accessLogID specified in the URL does not match the UUID v4 format.');
 
-        const collection = database.collection('accesslogs');
+        const collection = await database.collection('accesslogs');
         let docs
-
+        console.log(req.params.filter,req.params.filterValue)
         if (req.params.filter == 'posMerchantID') {
             docs = await collection.find({ posMerchantID: { $eq: req.params.filterValue } }).toArray()
         } else if (req.params.filter == 'tokenMerchantID') {
@@ -50,7 +50,7 @@ module.exports = async function (context, req) {
         }
         return Promise.resolve()
 
-    } catch (err) {
-
+    } catch (error) {
+        utils.handleError(context, error);
     }
 }    

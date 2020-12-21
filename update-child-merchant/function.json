@@ -6,9 +6,9 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "get"
+        "put"
       ],
-      "route": "get-access-log/merchants/{merchantID}/access-log/{accessLogID}"
+      "route": "update-child-merchant/{parentMerchantID}/child/{childID}"
     },
     {
       "type": "http",

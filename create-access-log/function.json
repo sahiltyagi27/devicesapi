@@ -1,14 +1,14 @@
 {
   "bindings": [
     {
-      "authLevel": "anonymous",
+      "authLevel": "function",
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
       "methods": [
-        "get"
+        "post"
       ],
-      "route": "get-access-log/merchants/{merchantID}/access-log/{accessLogID}"
+      "route": "access-log"
     },
     {
       "type": "http",

@@ -9,6 +9,16 @@ class BaseError extends Error {
 
 exports.BaseError = BaseError;
 
+class DeviceApiServerError extends BaseError {
+    constructor (message, code) {
+        super(message, code);
+        this.name = 'DeviceApiServerError';
+        this.code = code;
+        Error.captureStackTrace(this, this.constructor);
+    }
+}
+exports.DeviceApiServerError = DeviceApiServerError;
+
 
 class UserNotAuthenticatedError extends BaseError {
     constructor(message, code) {
@@ -59,3 +69,23 @@ class InvalidUUIDError extends BaseError {
     }
 }
 exports.InvalidUUIDError = InvalidUUIDError;
+
+class AccessLogNotFoundError extends BaseError {
+    constructor (message, code) {
+        super(message);
+        this.name = 'AccessLogNotFoundError';
+        this.code = code;
+        Error.captureStackTrace(this, this.constructor);
+    }
+}
+exports.AccessLogNotFoundError = AccessLogNotFoundError;
+
+class MerchantNotFoundError extends BaseError {
+    constructor (message, code) {
+        super(message);
+        this.name = 'MerchantNotFoundError';
+        this.code = code;
+        Error.captureStackTrace(this, this.constructor);
+    }
+}
+exports.MerchantNotFoundError = MerchantNotFoundError;
