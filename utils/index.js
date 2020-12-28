@@ -84,3 +84,73 @@ exports.validateUUIDField = (context, id, message = 'The point-of-service id spe
         }
     });
 };
+exports.handleMongoErrors = (context, error) => {
+    switch (error.code) {
+        case 11000:
+            handleDuplicateDocumentInserts(context);
+            break;
+        default:
+            this.handleDefaultError(context, error);
+            break;
+    }
+};
+
+const handleDuplicateDocumentInserts = context => {
+    let className, entity;
+
+    if (context.req.body.docType === 'pointOfService') {
+        className = 'DuplicatePointOfServiceError';
+        entity = 'pointOfService';
+    }
+    if (context.req.body.docType === 'pointOfServiceAuth') {
+        className = 'DuplicatePointOfServiceAuthError';
+        entity = 'pointOfServiceAuth';
+    }
+    if (context.req.body.docType === 'modules') {
+        className = 'DuplicateModulesError';
+        entity = 'modules';
+    }
+    if (context.req.body.docType === 'zones') {
+        className = 'DuplicateZonesError';
+        entity = 'zones';
+    }
+    if (context.req.body.docType === 'accessGroups') {
+        className = 'DuplicateAccessGroupsError';
+        entity = 'accessGroups';
+    }
+    if (context.req.body.docType === 'accessToken') {
+        className = 'DuplicateAccessTokenError';
+        entity = 'accessToken';
+    }
+    if (context.req.body.docType === 'schedules') {
+        className = 'DuplicateSchedulesError';
+        entity = 'schedules';
+    }
+    if (context.req.body.docType === 'sites') {
+        className = 'DuplicateSitesError';
+        entity = 'sites';
+    }
+    if (context.req.body.docType === 'moduleTemplates') {
+        className = 'DuplicateModuleTemplatesError';
+        entity = 'moduleTemplates';
+    }
+    if (context.req.body.docType === 'components') {
+        className = 'DuplicateComponentsError';
+        entity = 'components';
+    }
+    if (context.req.body.docType === 'accessLog') {
+        className = 'DuplicateAccessLogError';
+        entity = 'accessLog';
+    }
+    if (context.req.body.docType === 'posGroups') {
+        className = 'DuplicatePOSGroupsError';
+        entity = 'posGroups';
+    }
+    this.setContextResError(
+        context,
+        new errors[className](
+            `You've requested to create a new ${entity} but a ${entity} with the specified _id field already exists.`,
+            409
+        )
+    );
+};

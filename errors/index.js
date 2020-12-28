@@ -89,3 +89,13 @@ class MerchantNotFoundError extends BaseError {
     }
 }
 exports.MerchantNotFoundError = MerchantNotFoundError;
+
+class DuplicateAccessLogError extends BaseError {
+    constructor (message, code) {
+        super(message);
+        this.name = 'DuplicateAccessLogError';
+        this.code = code;
+        Error.captureStackTrace(this, this.constructor);
+    }
+}
+exports.DuplicateAccessLogError = DuplicateAccessLogError;
