@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "func start",
-    "test": "echo \"No tests yet...\""
+    "test": "mocha */*.spec.js "
   },
   "dependencies": {
     "mongodb": "^3.6.3",
@@ -12,5 +12,8 @@
     "request-promise": "^4.2.6",
     "uuid": "^8.3.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
+  }
 }

@@ -1,4 +1,5 @@
 const { database } = require('../db/mongodb');
+const uuid = require('uuid')
 const utils = require('../utils');
 const errors = require('../errors');
 module.exports = async function (context, req) {
@@ -13,7 +14,17 @@ module.exports = async function (context, req) {
             );
             return Promise.resolve();
         }
-        const collection = await database.collection('accesslogs');
+        if (!uuid.validate(req.body._id)){
+            utils.setContextResError(
+                context,
+                new errors.InvalidUUIDError(
+                    'The _id field specified in the request body does not match the UUID v4 format.',
+                    400
+                )
+            )
+            return Promise.resolve()
+        }
+            const collection = await database.collection('accesslogs');
         const response = await collection.insertOne(req.body);
         if (response && response.ops) {
             context.res = {

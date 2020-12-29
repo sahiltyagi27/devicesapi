@@ -1,11 +1,19 @@
 const { database } = require('../db/mongodb')
 const utils = require('../utils');
 const errors = require('../errors');
+const uuid = require('uuid');
 module.exports = async function (context, req) {
     try {
 
-       // await utils.validateUUIDField(context, req.params.merchantID, 'The accessLogID specified in the URL does not match the UUID v4 format.');
-
+       if(!uuid.validate(req.params.merchantID)){
+           utils.setContextResError(
+               context,
+               new errors.InvalidUUIDError(
+                   'The MerchantID specified in the URL does not match the UUID v4 format.',
+                   400
+               )
+           )
+       }
         const collection = await database.collection('accesslogs');
         let docs
         console.log(req.params.filter,req.params.filterValue)

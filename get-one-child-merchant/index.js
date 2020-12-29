@@ -9,10 +9,11 @@ module.exports = async function (context, req) {
             utils.setContextResError(
                 context,
                 new errors.InvalidUUIDError(
-                    'The parentMerchantID  specified in the URL does not match the UUID v4 format.',
+                    'The parentMerchantID specified in the URL does not match the UUID v4 format.',
                     400
                 )
             )
+            return Promise.resolve()
         }
 
         if (!uuid.validate(req.params.childID)) {
@@ -23,6 +24,7 @@ module.exports = async function (context, req) {
                     400
                 )
             )
+            return Promise.resolve();
         }
 
         let collection = database.collection('merchants');
