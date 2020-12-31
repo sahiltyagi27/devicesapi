@@ -17,12 +17,9 @@ module.exports = async function (context, req) {
 
         const users = await database.collection('users');
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        const data = {
-            email: req.body.email,
-            password: hashedPassword
-        }
+        req.body.password = hashedPassword
 
-        const result = await users.insertOne(data);
+        const result = await users.insertOne(req.body);
         if (result && result.ops) {
             context.res = {
                 body: result.ops[0]
