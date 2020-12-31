@@ -6,9 +6,9 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "delete"
+        "get"
       ],
-      "route": "delete-merchant-child/{parentMerchantID}/child/{childID}"
+      "route": "users/{userID}"
     },
     {
       "type": "http",
