@@ -16,7 +16,7 @@ module.exports = async (context, req) => {
             customerID: req.params.id,
             isLocked: false,
             isEnabled: true
-        }).toArray();
+        }).sort({ accessTokenName: 1 }).toArray();
 
         if (accessToken && accessToken.length && accessToken[0]) {
             context.res = {
